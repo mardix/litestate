@@ -1,4 +1,3 @@
-
 /**
  * reStated is a simple state manager.
  *
@@ -40,15 +39,15 @@
  *
  * // Run action
  * => store.increment();
- * 
+ *
  * //:: Subscription - Can subscribe to reStated object to get
  * => const s = store.subscribe(() => ...)
  * //:: To unsubscribe, invoke the value as a function
  * => s();
- * 
+ *
  * //:: Selectors are not mutable, must return value
- * //:: Only action mutators are mutable 
- * 
+ * //:: Only action mutators are mutable
+ *
  */
 
 export default function reStated(mutators = {}) {
@@ -57,22 +56,22 @@ export default function reStated(mutators = {}) {
   let state = mutators.$initState || {};
   let selectors = mutators.$selectors || {};
   for (const k in mutators) {
-      // reserved keys start with '$'
-      if (k.startsWith("$")) continue;
-      actions[k] = (...args) => {
-          mutators[k].call(this, state, ...args);
-          for (const s in selectors) {
-              state[s] = selectors[s]({...state });
-          }
-          subscribers.forEach(subscriber => subscriber({...state }));
-      };
+    // reserved keys start with '$'
+    if (k.startsWith('$')) continue;
+    actions[k] = (...args) => {
+      mutators[k].call(this, state, ...args);
+      for (const s in selectors) {
+        state[s] = selectors[s]({ ...state });
+      }
+      subscribers.forEach(subscriber => subscriber({ ...state }));
+    };
   }
   return {
-      ...actions,
-      getState: () => state,
-      subscribe(listener) {
-          subscribers.push(listener);
-          return () => subscribers.splice(subscribers.indexOf(listener), 1);
-      }
+    ...actions,
+    getState: () => state,
+    subscribe(listener) {
+      subscribers.push(listener);
+      return () => subscribers.splice(subscribers.indexOf(listener), 1);
+    },
   };
 }
