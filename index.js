@@ -1,65 +1,4 @@
-/**
- * reStated is a simple state manager.
- *
- *
- * Features:
- * - state management
- * - mutators
- * - selectors
- * - subscription
- *
- * @param {object} mutators
- *
- * Usage
- *
- * const store = reStated({
- *
- *  //-- State
- *  count: 0,
- *  key: 'something',
- *
- *  //-- Selectors
- *  // Selectors are not mutable, must return value
- *  // the value will be assigned to the key name
- *  $selectors: {
- *      newCount: (state) => state.count,
- *  },
- *
- *  //-- Action Mutators
- *  // functions added to the store state become mutator
- *  // only mutators can mutate the state
- *  // can be async
- *  increment: state => state.count+1,
- *  decrement: state => state.count-1,
- *  setName: (state, firstName) => { state.firstName = firstName; }
- *  fetch: async (state) => state.data = await.fetch(...)
- *  ...
- * })
- *
- * //-- run action mutators
- * store.increment();
- * store.setName('Joe')
- *
- * // actions can be chained
- * store.increment().setName('Joe')
- *
- * //-- Access state
- * store.$getState()
- *
- * //-- Subscription
- * store.$subscribe(state => console.log(state))
- *
- * //-- Unsubscribe
- * const s = store.$subscribe(state => console.log(state))
- * s(); // unsubscribe
- *
- * // Reserved keys
- * any object key with '$' prefix is reserved and not be
- * part of mutators.
- * ie:
- *  - $selectors: {object}
- *
- */
+/** reStated */
 
 /**
  * Compare two state
@@ -150,7 +89,7 @@ const memoizeSelector = (key, fn) => {
  * reStated
  * @param {Object} mutators
  */
-export default function reStated(mutators = {}) {
+module.exports = function reStated(mutators = {}) {
   const subscribers = [];
   const mutatorsKeys = Object.keys(mutators);
 
@@ -189,4 +128,4 @@ export default function reStated(mutators = {}) {
       return () => subscribers.splice(subscribers.indexOf(listener), 1);
     },
   };
-}
+};
