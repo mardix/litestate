@@ -1,13 +1,20 @@
 {
   "name": "restated-lib",
-  "version": "0.0.1",
-  "description": "A state management with mutators, following the Flux pattern",
-  "main": "index.js",
+  "version": "0.1.0",
+  "description": "An ambitiously small state management library that follows the Flux pattern.",
+  "main": "dist/restated.esm.js",
+  "module": "dist/restated.esm.js",
   "scripts": {
-    "test": "mocha"
+    "test": "jest --verbose ./test.js",
+    "mk-dist": "jest ./test.js && rollup -c && gzip-size ./dist/restated.esm.js",
+    "mk-dist0": "rollup -c && gzip-size ./dist/restated.esm.js",
+    "npm-publish": "jest ./test.js && rollup -c && npm publish"
+  },
+  "jest": {
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.jsx?$"
   },
   "engines": {
-    "node": ">=10.0.0" 
+    "node": ">=10.0.0"
   },
   "repository": {
     "type": "git",
@@ -20,7 +27,13 @@
   },
   "homepage": "https://github.com/mardix/restated#readme",
   "devDependencies": {
-    "mocha": "^6.1.3"
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "gzip-size-cli": "^3.0.0",
+    "jest": "^24.6.0",
+    "rollup": "^1.8.0",
+    "rollup-plugin-banner": "^0.2.0",
+    "rollup-plugin-terser": "^4.0.4"
   },
   "dependencies": {}
 }
