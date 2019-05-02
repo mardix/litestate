@@ -1,11 +1,11 @@
 
-[![gzip bundle size](http://img.badgesize.io/https://unpkg.com/restated-lib@latest/dist/restated-lib.esm.js?compression=gzip&style=flat-square)](https://unpkg.com/restated-lib)
+[![gzip bundle size](http://img.badgesize.io/https://unpkg.com/restated-lib@latest/dist/restated.esm.js?compression=gzip&style=flat-square)](https://unpkg.com/restated-lib)
 
 ---
 
 # reStated
 
-An ambitiously tiny flux-like library to manage your state.
+An ambitiously tiny, gizp ~800b, flux-like library to manage your state.
 
 Inspired by Redux and Vuex, **reStated** removes the boilerplate
 and keep it simple and flat.

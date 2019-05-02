@@ -1,7 +1,6 @@
 // reLiftState
 
-import { selectorMemoizer, isFn } from './utils.js';
-import onChange from './onchange.js';
+import { selectorMemoizer, isFn, objectOnChange } from './utils.js';
 
 /**
  * reLiftState
@@ -33,7 +32,7 @@ export default function reLiftState(initialState = {}, mutators = {}) {
       {}
     );
 
-  let state = onChange(initState, () => {
+  let state = objectOnChange(initState, () => {
     selectors.forEach(memoizedSel => memoizedSel(state));
     subscribers.forEach(s => s(state.___target___));
   });
