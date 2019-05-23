@@ -74,7 +74,9 @@ const store = reStated({
     count: 0,
 
     /** Computed state: function that returns a new value to the state **/
-    fullName(state) => `${state.firstName} ${state.lastName},
+    fullName(state) { 
+      return `${state.firstName} ${state.lastName}`
+    },
   },
 
   /** Action Mutators: functions to update the state **/
@@ -209,7 +211,9 @@ const store = reStated({
     count: 0,
 
     /** Computed state: function that returns a new value to the state **/
-    fullName(state) => `${state.firstName} ${state.lastName},
+    fullName(state) { 
+      return `${state.firstName} ${state.lastName}`
+    },
   },
   ...
 });
