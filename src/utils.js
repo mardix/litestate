@@ -46,7 +46,7 @@ function deepCopy(obj) {
   if (obj === null || typeof obj !== 'object') return obj;
   var temp = obj.constructor();
   for (const key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) temp[key] = obj[key];
+    if (Object.prototype.hasOwnProperty.call(obj, key)) temp[key] = immu(obj[key]);
   }
   return temp;
 }

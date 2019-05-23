@@ -46,6 +46,24 @@ test('store set selector', () => {
   expect(store.selectorName).toBe('reStated-x.x.x');
 });
 
+test('Test array count and add elements', () => {
+  const store = reStated({
+    state: {
+      name: 'reStated',
+      version: 'x.x.x',
+      comments: [],
+      commentsCount: state => state.comments.length,
+    },
+    addComments(state, comments) {
+      state.comments = state.comments.concat(comments);
+    },
+  });
+  store.addComments([{}, {}, {}]);
+  expect(store.commentsCount).toBe(3);
+  store.addComments({});
+  expect(store.commentsCount).toBe(4);
+});
+
 test('store action is an action function', () => {
   const store = reStated({
     action(state) {},

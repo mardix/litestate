@@ -1,4 +1,7 @@
 
+1.0.1
+  - Fixed immutability issues in deep copy. 
+
 1.0.0
   - change name from restated-lib to restatedjs
 

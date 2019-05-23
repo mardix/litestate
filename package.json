@@ -1,6 +1,6 @@
 {
   "name": "restatedjs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An ambitiously small state management library that follows the Flux pattern.",
   "main": "dist/restated.esm.js",
   "module": "dist/restated.esm.js",

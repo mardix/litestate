@@ -1,5 +1,5 @@
 
-![npm (tag)](https://img.shields.io/npm/v/restatedjs/latest.svg?style=flat-square) ![Travis (.org) branch](https://img.shields.io/travis/mardix/restatedjs/master.svg?style=flat-square) [![gzip bundle size](http://img.badgesize.io/https://unpkg.com/restatedjs@latest/dist/restatedjs.esm.js?compression=gzip&style=flat-square)](https://unpkg.com/restatedjs) ![NPM](https://img.shields.io/npm/l/restatedjs.svg?style=flat-square)
+![npm (tag)](https://img.shields.io/npm/v/restatedjs/latest.svg?style=flat-square) ![Travis (.org) branch](https://img.shields.io/travis/mardix/restated/master.svg?style=flat-square) [![gzip bundle size](http://img.badgesize.io/https://unpkg.com/restatedjs@latest/dist/restated.esm.js?compression=gzip&style=flat-square)](https://unpkg.com/restatedjs) ![NPM](https://img.shields.io/npm/l/restatedjs.svg?style=flat-square)
 ---
 
 # reStated
