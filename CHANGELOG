@@ -1,0 +1,20 @@
+
+1.0.0
+  - change name from restated-lib to restatedjs
+
+  - change constructor, to now have one object
+    reStated({
+      state: {
+        ...
+      },
+      actions()...
+    })
+
+  - retrieve the state directy:
+    const store = reStated({
+      state: {
+        myKey: 'Hi'
+      }
+    })
+    console.log(store.myKey)
+  

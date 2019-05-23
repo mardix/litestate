@@ -1,13 +1,13 @@
-/**
- * Compare two state
- * @param {object} s1
- * @param {object} s2
- * @returns {boolean}
- */
-const compState = (s1, s2) => JSON.stringify(s1) === JSON.stringify(s2);
-
-const proxyTarget = '___target___';
+export const proxyTarget = '#';
+const compareObj = (s1, s2) => JSON.stringify(s1) === JSON.stringify(s2);
 const isPrimitive = value => value === null || !['function', 'object'].includes(typeof value);
+
+/**
+ * Returns the object keys
+ * @param {*} obj
+ * @returns {array}
+ */
+export const keys = obj => Object.keys(obj);
 
 /**
  * isFn isFunction
@@ -18,20 +18,20 @@ const isPrimitive = value => value === null || !['function', 'object'].includes(
 export const isFn = (obj, key) => obj && typeof obj[key] === 'function';
 
 /**
- * selectorMemoizer a Proxy selector
+ * computeState a Proxy selector
  * @param {string} key
  * @param {function} fn
  * @return {function onChangeProxy}
- * ie: myMem = selectorMemoizer(k, (state) => return value)
+ * ie: myMem = computeState(k, (state) => return value)
  * myMem(state)
  */
-export const selectorMemoizer = (key, fn) => {
+export const computeState = (key, fn) => {
   let prevState = null;
   let prevValue = undefined;
   let value = undefined;
   return state => {
-    const exportedState = state.___target___ ? { ...state.___target___ } : { ...state };
-    if (!prevState || !compState(prevState, exportedState)) {
+    const exportedState = { ...state[proxyTarget] };
+    if (!prevState || !compareObj(prevState, exportedState)) {
       prevState = exportedState;
       value = fn(prevState);
     }
@@ -42,35 +42,39 @@ export const selectorMemoizer = (key, fn) => {
   };
 };
 
+function deepCopy(obj) {
+  if (obj === null || typeof obj !== 'object') return obj;
+  var temp = obj.constructor();
+  for (const key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) temp[key] = obj[key];
+  }
+  return temp;
+}
+
+function deepFreeze(obj) {
+  keys(obj).forEach(function(name) {
+    const prop = obj[name];
+    if (prop !== null && typeof prop === 'object') deepFreeze(prop);
+  });
+  return Object.freeze(obj);
+}
+
+export const immu = obj => deepFreeze(deepCopy(obj));
+
 /**
  * objectOnChange
  * Observe an object change, and run onChange()
  * @param {*} object
  * @param {*} onChange
+ * @returns {Proxy}
  */
 export const objectOnChange = (object, onChange) => {
   let inApply = false;
   let changed = false;
-  const propCache = new WeakMap();
 
   const handleChange = () => {
     if (!inApply) onChange();
     else if (!changed) changed = true;
-  };
-
-  const getOwnPropertyDescriptor = (target, property) => {
-    let props = propCache.get(target);
-    if (props) return props;
-
-    props = new Map();
-    propCache.set(target, props);
-
-    let prop = props.get(property);
-    if (!prop) {
-      prop = Reflect.getOwnPropertyDescriptor(target, property);
-      props.set(property, prop);
-    }
-    return prop;
   };
 
   const handler = {
@@ -78,12 +82,6 @@ export const objectOnChange = (object, onChange) => {
       if (property === proxyTarget) return target;
       const value = Reflect.get(target, property, receiver);
       if (isPrimitive(value) || property === 'constructor') return value;
-
-      const descriptor = getOwnPropertyDescriptor(target, property);
-      if (descriptor && !descriptor.configurable) {
-        if (descriptor.set && !descriptor.get) return undefined;
-        if (descriptor.writable === false) return value;
-      }
       return new Proxy(value, handler);
     },
 

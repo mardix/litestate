@@ -1,51 +1,74 @@
-// reLiftState
+// reStated
 
-import { selectorMemoizer, isFn, objectOnChange } from './utils.js';
+import { computeState, isFn, objectOnChange, immu, keys, proxyTarget } from './utils.js';
 
 /**
- * reLiftState
- * @param {object} initialState
- * @param {object function} mutators
+ * reStated
+ * @param {object {state:{}, functions{} }} stagingObject
+ * @return {Proxy}
  */
-export default function reLiftState(initialState = {}, mutators = {}) {
+export default function reStated(stagingObject = {}) {
+  /** @type {array} */
   const subscribers = [];
 
-  const initState = Object.keys(initialState)
+  /** @type {object} initial state with computed functions */
+  const initialState = stagingObject.state || {};
+
+  /** @type {object} the initial state without computed functions */
+  const initState = keys(initialState)
     .filter(v => !isFn(initialState, v))
     .reduce((pV, cV) => ({ ...pV, [cV]: initialState[cV] }), {});
 
-  /** Selectors, computed functions that accept the state as arg. Must return value */
-  const selectors = Object.keys(initialState)
+  /** @type {array} of computed functions that accept the state as arg. Must return value */
+  const computedState = keys(initialState)
     .filter(v => isFn(initialState, v))
-    .map(k => selectorMemoizer(k, initialState[k]));
+    .map(k => computeState(k, initialState[k]));
 
-  const actions = Object.keys(mutators)
-    .filter(v => isFn(mutators, v))
+  /** @type {object} object of all mutators function */
+  const actions = keys(stagingObject)
+    .filter(v => isFn(stagingObject, v))
     .reduce(
       (pV, cV) => ({
         ...pV,
         [cV]: (...args) => {
-          mutators[cV].call(this, state, ...args);
+          stagingObject[cV].call(this, state, ...args);
           return actions; // to allow chainability
         },
       }),
       {}
     );
 
+  /** @type {object} cache of the immuatable state */
+  let imState = {};
+
+  /** @type {Proxy} Hot state. Contains the data */
   let state = objectOnChange(initState, () => {
-    selectors.forEach(memoizedSel => memoizedSel(state));
-    subscribers.forEach(s => s(state.___target___));
+    computedState.forEach(cs => cs(state));
+    subscribers.forEach(s => s(state[proxyTarget]));
+    imState = immu(state[proxyTarget]);
   });
 
-  /** Initialize selectors */
-  selectors.forEach(memoizedSel => memoizedSel(state));
+  /** Initialize computedState */
+  computedState.forEach(cs => cs(state));
+  imState = immu(state[proxyTarget]);
 
-  return {
+  /** @type {object{function}} object of all actions */
+  const base = {
     ...actions,
-    getState: () => state.___target___,
+    getState: () => imState,
     subscribe(listener) {
       subscribers.push(listener);
       return () => subscribers.splice(subscribers.indexOf(listener), 1);
     },
   };
+
+  /**
+   * Return a new proxy
+   */
+  return new Proxy(base, {
+    // Returns either actions or state value
+    get: (obj, prop) => (prop in obj ? obj[prop] : Reflect.get(imState, prop)),
+    // Prevent settings items
+    set: (target, prop, value) => false,
+  });
 }

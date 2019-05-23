@@ -1,14 +1,21 @@
 {
-  "name": "restated-lib",
-  "version": "0.2.0",
+  "name": "restatedjs",
+  "version": "1.0.0",
   "description": "An ambitiously small state management library that follows the Flux pattern.",
   "main": "dist/restated.esm.js",
   "module": "dist/restated.esm.js",
   "scripts": {
-    "test": "jest --verbose ./test.js",
-    "mk-dist": "jest ./test.js && rollup -c && gzip-size ./dist/restated.esm.js",
-    "mk-dist0": "rollup -c && gzip-size ./dist/restated.esm.js",
-    "npm-publish": "jest ./test.js && rollup -c && npm publish"
+    "size": "gzip-size ./dist/restated.esm.js",
+    "check-js": "tsc --allowJs --checkJs --noEmit --target ES6 src/*.js",
+    "publish-docs-0": "cd ./docs && kolibri build && cp ./static/CNAME ./build",
+    "publish-docs": "npm run publish-docs-0 && gh-pages -d build",
+    "test": "jest ./test/",
+    "test-0": "jest --verbose ./test/",
+    "bundle-0": "npm run bundle && npm run size",
+    "bundle": "rollup -c ",
+    "commit-publish-tag": "cross-var git commit -am '$npm_package_version' && git tag $npm_package_version && git push && git push --tags",
+    "publish": "cross-var npm run test && npm run bundle && npm run commit-publish-tag && npm publish && npm run size",
+    "test-publish": "cross-var npm run test && npm run bundle && npm run commit-publish-tag && npm run size"
   },
   "jest": {
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.jsx?$"
@@ -21,9 +28,9 @@
     "url": "git+https://github.com/mardix/restated.git"
   },
   "author": {
-		"name": "Mardix",
-		"email": "mcx2082@gmail.com"
-	},
+    "name": "Mardix",
+    "email": "mcx2082@gmail.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/mardix/restated/issues"
@@ -32,6 +39,7 @@
   "devDependencies": {
     "@babel/core": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
+    "cross-var": "^1.1.0",
     "gzip-size-cli": "^3.0.0",
     "jest": "^24.6.0",
     "rollup": "^1.8.0",
