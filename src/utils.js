@@ -52,6 +52,7 @@ function deepCopy(obj) {
 }
 
 function deepFreeze(obj) {
+  if (obj === null || typeof obj !== 'object') return obj;
   keys(obj).forEach(function(name) {
     const prop = obj[name];
     if (prop !== null && typeof prop === 'object') deepFreeze(prop);
