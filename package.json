@@ -1,6 +1,6 @@
 {
   "name": "restatedjs",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "An ambitiously small state management library that follows the Flux pattern.",
   "main": "dist/restated.esm.js",
   "module": "dist/restated.esm.js",
@@ -14,7 +14,7 @@
     "bundle-0": "npm run bundle && npm run size",
     "bundle": "rollup -c ",
     "commit-publish-tag": "cross-var git commit -am '$npm_package_version' && git tag $npm_package_version && git push && git push --tags",
-    "publish": "cross-var npm run test && npm run bundle && npm run commit-publish-tag && npm publish && npm run size",
+    "publish-pkg": "cross-var npm run test && npm run bundle && npm run commit-publish-tag && npm publish && npm run size",
     "test-publish": "cross-var npm run test && npm run bundle && npm run commit-publish-tag && npm run size"
   },
   "jest": {

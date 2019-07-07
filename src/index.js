@@ -1,6 +1,13 @@
 // reStated
 
-import { computeState, isFn, objectOnChange, immu, keys, proxyTarget } from './utils.js';
+import {
+  computeState,
+  isFn,
+  objectOnChange,
+  immu,
+  keys,
+  proxyTarget,
+} from './utils.js';
 
 /**
  * reStated
@@ -30,10 +37,7 @@ export default function reStated(stagingObject = {}) {
     .reduce(
       (pV, cV) => ({
         ...pV,
-        [cV]: (...args) => {
-          stagingObject[cV].call(this, state, ...args);
-          return actions; // to allow chainability
-        },
+        [cV]: (...args) => stagingObject[cV].call(this, state, ...args),
       }),
       {}
     );

@@ -143,25 +143,19 @@ test('State set nested value', () => {
   expect(store.k1).toBe(2);
 });
 
-test('store chain action is an action function', () => {
+test('action returns a value', () => {
   const store = reStated({
-    action(state) {},
-    action2(state) {},
-    action3(state) {},
+    action(state) {
+      return 1;
+    },
+    action2(state) {
+      return 2;
+    },
+    action3(state) {
+      return 3;
+    },
   });
-  expect(store.action().action2().action3).toBeInstanceOf(Function);
-});
-
-test('store chain action is an action function returning object of actions', () => {
-  const store = reStated({
-    action(state) {},
-    action2(state) {},
-    action3(state) {},
-  });
-  expect(
-    store
-      .action()
-      .action2()
-      .action3()
-  ).toBeInstanceOf(Object);
+  expect(store.action()).toBe(1);
+  expect(store.action2()).toBe(2);
+  expect(store.action3()).toBe(3);
 });

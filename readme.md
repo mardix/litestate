@@ -148,7 +148,7 @@ const version = store.version;
 
 ### Actions Mutators
 
-Action mutators are functions that can mutate the state in place. They accept the current `state` as the first argument and can also be chained during execution.
+Action mutators are functions that can mutate the state in place. They accept the current `state` as the first argument and can return any values.
 
 Action mutators are set during initialization of the store. 
 
@@ -178,7 +178,7 @@ const store = reStated({
 
 #### Usage
 
-Run an action mutator by using the function name, and action mutators can also be chained.
+Run an action mutator by using the function name
 
 ```js
 store.setFirstName('Mardix');
@@ -187,11 +187,6 @@ store.setLastName('M.');
 store.inc(); // will increment the count
 store.dec(); // will decrement the count
 
-// chainable
-store
-  .inc()
-  .makeAjaxCall()
-  .dec();
 ```
 
 ---
