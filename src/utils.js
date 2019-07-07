@@ -1,6 +1,7 @@
 export const proxyTarget = '#';
 const compareObj = (s1, s2) => JSON.stringify(s1) === JSON.stringify(s2);
-const isPrimitive = value => value === null || !['function', 'object'].includes(typeof value);
+const isPrimitive = value =>
+  value === null || !['function', 'object'].includes(typeof value);
 
 /**
  * Returns the object keys
@@ -46,7 +47,8 @@ function deepCopy(obj) {
   if (obj === null || typeof obj !== 'object') return obj;
   var temp = obj.constructor();
   for (const key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) temp[key] = immu(obj[key]);
+    if (Object.prototype.hasOwnProperty.call(obj, key))
+      temp[key] = immu(obj[key]);
   }
   return temp;
 }
@@ -117,8 +119,6 @@ export const objectOnChange = (object, onChange) => {
       return Reflect.apply(target, thisArg, argumentsList);
     },
   };
-
   const proxy = new Proxy(object, handler);
-
   return proxy;
 };

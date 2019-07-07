@@ -1,4 +1,10 @@
 
+0.11.0
+  - rename restated to litestate
+
+1.1.0 
+  - Remove chainability, actions can return their own values
+
 1.0.1
   - Fixed immutability issues in deep copy. 
 

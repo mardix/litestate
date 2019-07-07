@@ -1,4 +1,4 @@
-// reStated
+// Litestate
 
 import {
   computeState,
@@ -10,11 +10,11 @@ import {
 } from './utils.js';
 
 /**
- * reStated
- * @param {object {state:{}, functions{} }} stagingObject
+ * Litestate
+ * @param {{ }} stagingObject
  * @return {Proxy}
  */
-export default function reStated(stagingObject = {}) {
+export default function Litestate(stagingObject = {}) {
   /** @type {array} */
   const subscribers = [];
 

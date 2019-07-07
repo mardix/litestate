@@ -1,10 +1,10 @@
 
-![npm (tag)](https://img.shields.io/npm/v/restatedjs/latest.svg?style=flat-square) ![Travis (.org) branch](https://img.shields.io/travis/mardix/restated/master.svg?style=flat-square) [![gzip bundle size](http://img.badgesize.io/https://unpkg.com/restatedjs@latest/dist/restated.esm.js?compression=gzip&style=flat-square)](https://unpkg.com/restatedjs) ![NPM](https://img.shields.io/npm/l/restatedjs.svg?style=flat-square)
+![npm (tag)](https://img.shields.io/npm/v/litestate/latest.svg?style=flat-square) ![Travis (.org) branch](https://img.shields.io/travis/mardix/litestate/master.svg?style=flat-square) [![gzip bundle size](http://img.badgesize.io/https://unpkg.com/litestate@latest/dist/litestate.esm.js?compression=gzip&style=flat-square)](https://unpkg.com/litestate) ![NPM](https://img.shields.io/npm/l/litestate.svg?style=flat-square)
 ---
 
-# reStated
+# Litestate
 
-An ambitiously tiny, gizp ~900b, flux-like progressive state management library inpired by Redux and Vuex.
+An ambitiously tiny, gizp ~800b, flux-like progressive state management library inpired by Redux and Vuex.
 
 ---
 
@@ -16,30 +16,30 @@ An ambitiously tiny, gizp ~900b, flux-like progressive state management library 
 -   [x] Computed state
 -   [x] Subscription
 
-Inspired by Redux and Vuex, **reStated** removes the boilerplate to keep your state simple, intuitive and immutable. 
+Inspired by Redux and Vuex, **Litestate** removes the boilerplate to keep your state simple, intuitive and immutable. 
 
 It follows the flux pattern and let you change your state only via Action Mutators. 
 
-**reStated** is framework agnostic, and can work with React, Vuejs etc.
+**Litestate** is framework agnostic, and can work with React, Vuejs etc.
 
-**reStated** allows you to mutate your state in place without the need for reducers like Redux or actions and mutations like Vuex. 
+**Litestate** allows you to mutate your state in place without the need for reducers like Redux or actions and mutations like Vuex. 
 
 
-**reStated** allows you to write *computed state*, which are functions that select part of your state, to return a new value that will be set in your state.
+**Litestate** allows you to write *computed state*, which are functions that select part of your state, to return a new value that will be set in your state.
 
-**reStated** also provides a subscription method to watch the state
+**Litestate** also provides a subscription method to watch the state
 
 ---
 
 ## Installation
 
-The best way to import **reStated** is via ESM JavaScript, where we specify the type as module, and we import it from **unpkg.com** 
+The best way to import **Litestate** is via ESM JavaScript, where we specify the type as module, and we import it from **unpkg.com** 
 
 Make sure `type="module"` exists in the script tag.
 
 ```html
 <script type="module">
-  import reStated from '//unpkg.com/restatedjs';
+  import Litestate from '//unpkg.com/litestate';
   
   ...
 </script>
@@ -48,26 +48,26 @@ Make sure `type="module"` exists in the script tag.
 Or by installing in your project
 
 ```
-npm install restatedjs
+npm install litestate
 ```
 
 ```js
-import reStated from 'restatedjs';
+import Litestate from 'litestate';
 ```
 
 ---
 
 ### Create the store
 
-#### **`reStated({state:{}, ...function ActionMutators})`**
+#### **`Litestate({state:{}, ...function ActionMutators})`**
 
 ```html
 
 <script type="module">
 
-import reStated from '//unpkg.com/restatedjs';
+import Litestate from '//unpkg.com/litestate';
 
-const store = reStated({
+const store = Litestate({
   state:{
     firstName: '',
     lastName: '',
@@ -117,9 +117,9 @@ If the value of a state property is a function it will be converted into a compu
 
 
 ```js
-const store = reStated({
+const store = Litestate({
   state: {
-    name: 'reStated',
+    name: 'Litestate',
     version: '1.x.x',
     firstName: '',
     lastName: '',
@@ -131,7 +131,7 @@ const store = reStated({
 
 #### Usage
 
-You can access the full state with the method `reStated.getState()` or by using any state properties.
+You can access the full state with the method `Litestate.getState()` or by using any state properties.
 
 ```js
 // get full state object
@@ -154,7 +154,7 @@ Action mutators are set during initialization of the store.
 
 ```js
 
-const store = reStated({
+const store = Litestate({
   setFirstName(state, firstName) {
     state.firstName = firstName;
   },
@@ -199,7 +199,7 @@ The selected value will be assigned to the function's name
 
 ```js
 
-const store = reStated({
+const store = Litestate({
   state:{
     firstName: '',
     lastName: '',
@@ -232,7 +232,7 @@ The same way you would access the initial state, computed states are accessed th
 
 You can subscribe to changes in the state. Each time the state is updated it will run a function that you set.
 
-`reStated.subscription(listener:function)`
+`Litestate.subscription(listener:function)`
 
 ```js
 const sub = store.subscribe(state => {
@@ -258,11 +258,11 @@ unsub();
 
 ### API
 
-`reStated()`
+`Litestate()`
 
-`reStated.getState()`
+`Litestate.getState()`
 
-`reStated.subscribe()`
+`Litestate.subscribe()`
 
 ---
 

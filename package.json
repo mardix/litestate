@@ -1,21 +1,22 @@
 {
-  "name": "restatedjs",
-  "version": "1.1.0",
+  "name": "litestate",
+  "pkgName": "Litestate",
+  "version": "0.11.0",
   "description": "An ambitiously small state management library that follows the Flux pattern.",
-  "main": "dist/restated.esm.js",
-  "module": "dist/restated.esm.js",
+  "main": "dist/litestate.esm.js",
+  "module": "dist/litestate.esm.js",
   "scripts": {
-    "size": "gzip-size ./dist/restated.esm.js",
-    "check-js": "tsc --allowJs --checkJs --noEmit --target ES6 src/*.js",
-    "publish-docs-0": "cd ./docs && kolibri build && cp ./static/CNAME ./build",
+    "size": "gzip-size ./dist/litestate.esm.js",
+    "check-js": "tsc",
+    "publish-docs-0": "cd ./docs && kolibri build",
     "publish-docs": "npm run publish-docs-0 && gh-pages -d build",
     "test": "jest ./test/",
     "test-0": "jest --verbose ./test/",
-    "bundle-0": "npm run bundle && npm run size",
-    "bundle": "rollup -c ",
+    "build-i": "npm run build && npm run size",
+    "build": "rollup -c ",
     "commit-publish-tag": "cross-var git commit -am '$npm_package_version' && git tag $npm_package_version && git push && git push --tags",
-    "publish-pkg": "cross-var npm run test && npm run bundle && npm run commit-publish-tag && npm publish && npm run size",
-    "test-publish": "cross-var npm run test && npm run bundle && npm run commit-publish-tag && npm run size"
+    "publish-pkg": "cross-var npm run test && npm run build && npm run commit-publish-tag && npm publish && npm run size",
+    "test-publish": "cross-var npm run test && npm run build && npm run commit-publish-tag && npm run size"
   },
   "jest": {
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.jsx?$"
@@ -25,7 +26,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mardix/restated.git"
+    "url": "git+https://github.com/mardix/litestate.git"
   },
   "author": {
     "name": "Mardix",
@@ -33,9 +34,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mardix/restated/issues"
+    "url": "https://github.com/mardix/litestate/issues"
   },
-  "homepage": "https://github.com/mardix/restated",
+  "homepage": "https://github.com/mardix/litestate",
   "devDependencies": {
     "@babel/core": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
@@ -44,7 +45,8 @@
     "jest": "^24.6.0",
     "rollup": "^1.8.0",
     "rollup-plugin-banner": "^0.2.0",
-    "rollup-plugin-terser": "^4.0.4"
+    "rollup-plugin-terser": "^4.0.4",
+    "typescript": "^3.4.5"
   },
   "dependencies": {}
 }

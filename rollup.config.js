@@ -14,17 +14,14 @@ const terser = require('rollup-plugin-terser');
 import banner from 'rollup-plugin-banner';
 const pkg = require('./package.json');
 
-const topBanner = `${pkg.pkgName} v${pkg.version}
-Copyright ${new Date().getFullYear()} Mardix mcx2082@gmail.com
-License: MIT
+const topBanner = `${pkg.pkgName} ${pkg.version}
 ${pkg.homepage}
-Build date: ${new Date().toLocaleString()}
 `;
 
 export default {
   input: './src/index.js',
   output: {
-    file: './dist/restated.esm.js',
+    file: './dist/litestate.esm.js',
     format: 'esm',
   },
   plugins: [terser.terser(), banner(topBanner)],

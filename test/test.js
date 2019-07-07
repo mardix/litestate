@@ -1,55 +1,55 @@
-import reStated from '../src/index.js';
+import Litestate from '../src/index.js';
 
-test('reStated is a function', () => {
-  expect(reStated).toBeInstanceOf(Function);
+test('Litestate is a function', () => {
+  expect(Litestate).toBeInstanceOf(Function);
 });
 
-test('reStated() store returns an object', () => {
-  const store = reStated();
+test('Litestate() store returns an object', () => {
+  const store = Litestate();
   expect(store).toBeInstanceOf(Object);
 });
 
 test('store.subscribe is a function', () => {
-  const store = reStated();
+  const store = Litestate();
   expect(store.subscribe).toBeInstanceOf(Function);
 });
 
 test('store.getState is a function', () => {
-  const store = reStated();
+  const store = Litestate();
   expect(store.getState).toBeInstanceOf(Function);
 });
 
 test('store.getState() returns an object', () => {
-  const store = reStated();
+  const store = Litestate();
   expect(store.getState()).toBeInstanceOf(Object);
 });
 
 test('store contains initial state', () => {
-  const store = reStated({
+  const store = Litestate({
     state: {
-      name: 'reStated',
+      name: 'Litestate',
       version: 'x.x.x',
     },
   });
-  expect(store.getState().name).toBe('reStated');
+  expect(store.getState().name).toBe('Litestate');
   expect(store.version).toBe('x.x.x');
 });
 
 test('store set selector', () => {
-  const store = reStated({
+  const store = Litestate({
     state: {
-      name: 'reStated',
+      name: 'Litestate',
       version: 'x.x.x',
       selectorName: state => `${state.name}-${state.version}`,
     },
   });
-  expect(store.selectorName).toBe('reStated-x.x.x');
+  expect(store.selectorName).toBe('Litestate-x.x.x');
 });
 
 test('Test array count and add elements', () => {
-  const store = reStated({
+  const store = Litestate({
     state: {
-      name: 'reStated',
+      name: 'Litestate',
       version: 'x.x.x',
       comments: [],
       commentsCount: state => state.comments.length,
@@ -65,37 +65,37 @@ test('Test array count and add elements', () => {
 });
 
 test('store action is an action function', () => {
-  const store = reStated({
+  const store = Litestate({
     action(state) {},
   });
   expect(store.action).toBeInstanceOf(Function);
 });
 
 test('store run action, mutate state', () => {
-  const store = reStated({
+  const store = Litestate({
     state: {
-      name: 'reStated',
+      name: 'Litestate',
       version: 'x.x.x',
       selectorName: state => `${state.name}-${state.version}`,
     },
     changeVersion: state => (state.version = '1.0.1'),
   });
-  expect(store.getState().selectorName).toBe('reStated-x.x.x');
+  expect(store.getState().selectorName).toBe('Litestate-x.x.x');
   store.changeVersion();
 
   expect(() => {
     store.state.name = 'Jones';
   }).toThrow();
 
-  expect(store.getState().selectorName).toBe('reStated-1.0.1');
-  expect(store.selectorName).toBe('reStated-1.0.1');
-  expect(store.name).toBe('reStated');
+  expect(store.getState().selectorName).toBe('Litestate-1.0.1');
+  expect(store.selectorName).toBe('Litestate-1.0.1');
+  expect(store.name).toBe('Litestate');
 });
 
 test('State get nested value', () => {
-  const store = reStated({
+  const store = Litestate({
     state: {
-      name: 'reStated',
+      name: 'Litestate',
       version: 'x.x.x',
       k: {
         v: {
@@ -111,9 +111,9 @@ test('State get nested value', () => {
 });
 
 test('State mutate nested value', () => {
-  const store = reStated({
+  const store = Litestate({
     state: {
-      name: 'reStated',
+      name: 'Litestate',
       version: 'x.x.x',
       k: {
         v: {
@@ -130,9 +130,9 @@ test('State mutate nested value', () => {
 });
 
 test('State set nested value', () => {
-  const store = reStated({
+  const store = Litestate({
     state: {
-      name: 'reStated',
+      name: 'Litestate',
       version: 'x.x.x',
     },
     set(state, value) {
@@ -144,7 +144,7 @@ test('State set nested value', () => {
 });
 
 test('action returns a value', () => {
-  const store = reStated({
+  const store = Litestate({
     action(state) {
       return 1;
     },
