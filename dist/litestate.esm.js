@@ -1,5 +1,5 @@
 /** 
- * Litestate 0.11.0
+ * Litestate 0.12.0
  * https://github.com/mardix/litestate
  * 
  */
