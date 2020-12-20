@@ -1,7 +1,7 @@
 {
   "name": "litestate",
   "pkgName": "Litestate",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "description": "An ambitiously small state management library that follows the Flux pattern.",
   "main": "dist/litestate.esm.js",
   "module": "dist/litestate.esm.js",
