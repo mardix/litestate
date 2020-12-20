@@ -1,13 +1,6 @@
 // Litestate
 
-import {
-  computeState,
-  isFn,
-  objectOnChange,
-  immu,
-  keys,
-  proxyTarget,
-} from './utils.js';
+import { computeState, isFn, objectOnChange, immu, keys, proxyTarget } from './utils.js';
 
 /**
  * Litestate
@@ -37,7 +30,7 @@ export default function Litestate(stagingObject = {}) {
     .reduce(
       (pV, cV) => ({
         ...pV,
-        [cV]: (...args) => stagingObject[cV].call(this, state, ...args),
+        [cV]: (...args) => stagingObject[cV].call(actions, state, ...args),
       }),
       {}
     );
@@ -59,8 +52,8 @@ export default function Litestate(stagingObject = {}) {
   /** @type {object{function}} object of all actions */
   const base = {
     ...actions,
-    getState: () => imState,
-    subscribe(listener) {
+    $state: () => imState,
+    $subscribe(listener) {
       subscribers.push(listener);
       return () => subscribers.splice(subscribers.indexOf(listener), 1);
     },

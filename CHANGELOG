@@ -1,4 +1,9 @@
 
+0.12.0
+  - Allow actions to call other actions
+  - rename getState() to $state()
+  - rename subscribe() to $subscribe()
+  
 0.11.0
   - rename restated to litestate
 

@@ -131,11 +131,11 @@ const store = Litestate({
 
 #### Usage
 
-You can access the full state with the method `Litestate.getState()` or by using any state properties.
+You can access the full state with the method `Litestate.$state()` or by using any state properties.
 
 ```js
 // get full state object
-const myFullState = store.getState();
+const myFullState = store.$state();
 
 // or individual property
 
@@ -152,6 +152,8 @@ Action mutators are functions that can mutate the state in place. They accept th
 
 Action mutators are set during initialization of the store. 
 
+[v.0.12] Action mutators can also call other actions by using `this`.
+
 ```js
 
 const store = Litestate({
@@ -161,7 +163,7 @@ const store = Litestate({
   setLastName(state, lastName) {
     state.lastName = lastName;
   },
-
+  
   // Async example
   async makeAjaxCall(state, url) {
     state.pending = true; // The state will be mutated
@@ -172,9 +174,16 @@ const store = Litestate({
   // Other action mutators
   inc(state) => state.count++,
   dec(state) => state.count--,
+  
+  // This action will call other actions
+  async callMe(state) {
+    this.inc();
+    await this.makeAjaxCall();
+  }
 })
 
 ```
+
 
 #### Usage
 
@@ -187,6 +196,7 @@ store.setLastName('M.');
 store.inc(); // will increment the count
 store.dec(); // will decrement the count
 
+store.callMe(); // will call other actions
 ```
 
 ---
@@ -232,10 +242,10 @@ The same way you would access the initial state, computed states are accessed th
 
 You can subscribe to changes in the state. Each time the state is updated it will run a function that you set.
 
-`Litestate.subscription(listener:function)`
+`Litestate.$subscribe(listener:function)`
 
 ```js
-const sub = store.subscribe(state => {
+const unsub = store.$subscribe(state => {
   console.log(`I'm updated ${state.count}`);
 });
 ```
@@ -245,7 +255,7 @@ const sub = store.subscribe(state => {
 To unsubscribe
 
 ```js
-const unsub = store.subscribe(state => {
+const unsub = store.$subscribe(state => {
   console.log(`I'm updated ${state.count}`);
 });
 
@@ -258,11 +268,11 @@ unsub();
 
 ### API
 
-`Litestate()`
+`Litestate()` : Initialize the state management
 
-`Litestate.getState()`
+`Litestate.$state()` : returns the state
 
-`Litestate.subscribe()`
+`Litestate.$subscribe(listener:function)` : subscribe a function to the changes 
 
 ---
 

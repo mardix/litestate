@@ -9,19 +9,19 @@ test('Litestate() store returns an object', () => {
   expect(store).toBeInstanceOf(Object);
 });
 
-test('store.subscribe is a function', () => {
+test('store.$subscribe is a function', () => {
   const store = Litestate();
-  expect(store.subscribe).toBeInstanceOf(Function);
+  expect(store.$subscribe).toBeInstanceOf(Function);
 });
 
-test('store.getState is a function', () => {
+test('store.$state is a function', () => {
   const store = Litestate();
-  expect(store.getState).toBeInstanceOf(Function);
+  expect(store.$state).toBeInstanceOf(Function);
 });
 
-test('store.getState() returns an object', () => {
+test('store.$state() returns an object', () => {
   const store = Litestate();
-  expect(store.getState()).toBeInstanceOf(Object);
+  expect(store.$state()).toBeInstanceOf(Object);
 });
 
 test('store contains initial state', () => {
@@ -31,7 +31,7 @@ test('store contains initial state', () => {
       version: 'x.x.x',
     },
   });
-  expect(store.getState().name).toBe('Litestate');
+  expect(store.$state().name).toBe('Litestate');
   expect(store.version).toBe('x.x.x');
 });
 
@@ -80,14 +80,14 @@ test('store run action, mutate state', () => {
     },
     changeVersion: state => (state.version = '1.0.1'),
   });
-  expect(store.getState().selectorName).toBe('Litestate-x.x.x');
+  expect(store.$state().selectorName).toBe('Litestate-x.x.x');
   store.changeVersion();
 
   expect(() => {
     store.state.name = 'Jones';
   }).toThrow();
 
-  expect(store.getState().selectorName).toBe('Litestate-1.0.1');
+  expect(store.$state().selectorName).toBe('Litestate-1.0.1');
   expect(store.selectorName).toBe('Litestate-1.0.1');
   expect(store.name).toBe('Litestate');
 });
@@ -158,4 +158,24 @@ test('action returns a value', () => {
   expect(store.action()).toBe(1);
   expect(store.action2()).toBe(2);
   expect(store.action3()).toBe(3);
+});
+
+test('action call other actions', () => {
+  const store = Litestate({
+    state: {
+      initCount: 0,
+    },
+    incInitCount(state) {
+      state.initCount++;
+    },
+    innerAction(state) {
+      this.incInitCount();
+    },
+  });
+  store.incInitCount();
+  expect(store.initCount).toBe(1);
+  store.innerAction();
+  expect(store.initCount).toBe(2);
+  store.innerAction();
+  expect(store.initCount).toBe(3);
 });
